@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.rgt.repository.RgtMapper">
+
+	<select id="countOrderId" parameterType="String" resultType="int">
+		SELECT COUNT(ORDER_ID)
+		  FROM ORDER_INFO
+		 WHERE ORDER_ID = #{orderId}
+	</select>
+
+	<insert id="insertOrderInfo" parameterType="com.rgt.dto.OrderDTO">
+		INSERT INTO ORDER_INFO (
+		                       ORDER_ID
+		                     , PRODUCT_NAME
+		                     , OPTIONS
+		                     , TABLE_NO
+		                     , QUANTITY
+		                     , ORDER_DATE
+		                     , ORDER_TIME
+		                     , DATE_TIME
+		                     , ROBOT_STATUS
+		                     , DONG
+		                     , HO
+		                     , SEQ
+		                     , ORDERER_NAME
+		                     ) 
+                      VALUES (
+                               #{orderId}
+					         , #{productName}
+							 , #{options}
+							 , #{tableNo}
+							 , #{quantity}
+							 , #{orderDate}
+							 , #{orderTime}
+					         , #{dateTime}
+							 , #{robotStatus}
+							 , #{dong}
+							 , #{ho}
+							 , #{seq}
+							 , #{ordererName}
+							 )
+	</insert>	
+	
+	<update id="updateProductName" parameterType="String">
+		 UPDATE order_info SET product_name = '카페라떼' 
+		                 WHERE product_name = '카페테리아'
+	</update>
+</mapper>
