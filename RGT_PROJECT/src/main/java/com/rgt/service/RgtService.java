@@ -4,10 +4,11 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import com.rgt.dto.OrderDTO;
@@ -78,6 +79,31 @@ public class RgtService {
 		}
 		
 		return result;
+	}
+	
+	@Autowired
+	private AsyncMethods asyncMethods; 
+	public String async(String param) {
+		//@Async메소드를 호출 할때 같은 클래스에 있는 Async메소드는 비동기적으로 동작하지 않는다.
+		//다른 클래스에 만들어서 의존성을 주입 받아 사용돼야 한다.
+		//접근제한자를 public으로 만들어야되고 반환타입을 void로 설정해야 된다.
+		asyncMethods.asyncMethod(param);
+		
+		return null;
+	}
+	
+	@Component
+	public class AsyncMethods{
+		@Async
+		public void asyncMethod(String param) {
+			try {
+				System.out.println(" ## ASYNC TEST START !! param = " + param);
+				Thread.sleep(4000);
+				System.out.println(" ## ASYNC TEST STOP .. param = " + param);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 }
