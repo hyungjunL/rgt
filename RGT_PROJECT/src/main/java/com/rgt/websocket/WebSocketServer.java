@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
-@ServerEndpoint(value = "/fortem")
+@ServerEndpoint(value = "/sample")
 @Slf4j
 public class WebSocketServer {
     
